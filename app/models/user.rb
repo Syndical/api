@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   validates :auth_token, uniqueness: true
-
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   before_create :generate_authentication_token!
 
-  has_many :products, dependent: :destroy
+  has_many :events
 
   def generate_authentication_token!
     begin

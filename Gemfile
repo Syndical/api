@@ -31,9 +31,12 @@ gem 'font-awesome-rails'
 gem 'simple_form'
 gem 'deathbycaptcha'
 gem 'rspec'
+gem 'que'
+gem 'rails_admin'
 
 #Production
 gem 'pg'
+gem 'taps'
 gem 'unicorn'
 
 #Driver gems
@@ -47,10 +50,6 @@ gem 'watir-webdriver'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
-end
-
-group :development do
-  gem 'sqlite3'
 end
 
 group :development, :test do

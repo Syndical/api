@@ -11,18 +11,69 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729231614) do
+ActiveRecord::Schema.define(version: 20160302195118) do
 
-  create_table "products", force: :cascade do |t|
-    t.string   "title",      default: ""
-    t.decimal  "price",      default: 0.0
-    t.boolean  "published",  default: false
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.string   "state"
+    t.string   "country"
+    t.string   "type"
+    t.string   "subtype"
+    t.text     "body_text"
+    t.text     "details"
+    t.string   "url"
+    t.text     "categories"
+    t.text     "tags"
+    t.string   "phone_number"
+    t.boolean  "family_friendly"
+    t.datetime "dstart"
+    t.datetime "dtend"
+    t.integer  "duration"
+    t.datetime "ticket_deadline"
+    t.boolean  "tickets_required"
+    t.float    "price"
+    t.boolean  "free"
+    t.string   "contact_name"
+    t.integer  "organizer_id"
+    t.integer  "venue_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "timezone"
+    t.string   "image_url"
+    t.string   "ticketing_url"
+    t.string   "uid"
+    t.string   "fb_event_url"
+    t.string   "city"
+    t.string   "postal_code"
+    t.string   "address"
+    t.string   "name"
+    t.integer  "status"
+    t.text     "log"
   end
 
-  add_index "products", ["user_id"], name: "index_products_on_user_id"
+  create_table "logs", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.boolean  "success"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "organizers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "email"
+    t.string   "url"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "postal_code"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -40,8 +91,22 @@ ActiveRecord::Schema.define(version: 20150729231614) do
     t.string   "auth_token",             default: ""
   end
 
-  add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "venues", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "email"
+    t.string   "url"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "postal_code"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+  end
 
 end
